@@ -1,23 +1,24 @@
-//modules
-const path = require("path");
-const express = require("express");
-const bodyParser = require("body-parser");
-const pug = require("pug");
-const expresshds = require("express-handlebars");
-//middlewares
-const productsConstrolllers = require("./controllers/products");
-const shopRoutes = require("./routes/shop");
-const adminRoutes = require("./routes/admin");
-//express
-const app = express();
-//config
-app.set("view engine", "pug");
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static("public"));
-//Route handler
-app.use("/admin", adminRoutes.router);
-app.use(shopRoutes);
-app.use(productsConstrolllers.get404);
+const path = require('path');
 
-//Listening
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const errorController = require('./controllers/error');
+
+const app = express();
+
+app.set('view engine', 'ejs');
+app.set('views', 'views');
+
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/admin', adminRoutes);
+app.use(shopRoutes);
+
+app.use(errorController.get404);
+
 app.listen(3000);
