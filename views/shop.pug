@@ -1,0 +1,18 @@
+extends layout/main-layout.pug
+
+block content
+    main
+        .grid
+            each products in pds 
+                article.card.product-item
+                    header.card__header
+                        h1.product__title #{products.title}
+                    .card__image
+                        img(src="https://picsum.photos/200", alt="Book")
+                    div.card__content
+                        h2.product__price $19.99
+                        p.product__description A very interesting book about so many even more interesting things!
+                    .card__actions
+                        button.btnAdd to Cart
+            else 
+                h1 no porducts
